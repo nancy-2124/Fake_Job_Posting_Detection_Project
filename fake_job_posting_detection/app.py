@@ -6,6 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from sklearn.metrics import confusion_matrix
+from pathlib import Path
 
 st.set_page_config(
     page_title="Fake Job Posting Detection",
@@ -15,9 +16,9 @@ st.set_page_config(
 
 @st.cache_resource
 def load_model():
-    with open("fake_job_model.pkl", "rb") as f:
+    model_path = Path(__file__).resolve().parent / "fake_job_model.pkl"
+    with open(model_path, "rb") as f:
         return pickle.load(f)
-
 try:
     model_data = load_model()
     nb_classifier = model_data["nb_classifier"]

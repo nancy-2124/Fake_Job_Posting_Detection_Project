@@ -75,50 +75,59 @@ tab1, tab2 = st.tabs(["🔍 Predict Fake Job", "📊 Exploratory Data Analysis"]
 
 with tab1:
     st.header("🔍 Enter Job Posting Details")
-    st.write("Enter the details of a job posting below and click **Predict**.")
+    st.write(
+        "Enter the details of a job posting below and click **Predict**."
+    )
 
     location = st.text_input(
         "📍 Job Location",
         placeholder="Example: New York, Remote, San Francisco"
     )
+
     description = st.text_area(
-        "📝 Job Description",
-        height=180,
+        "📄 Job Description",
         placeholder="Enter the job description..."
     )
+
     requirements = st.text_area(
         "📋 Job Requirements",
-        height=180,
         placeholder="Enter the job requirements..."
     )
+
     telecommuting = st.selectbox(
         "🏠 Telecommuting (Remote Job)",
-        options=[0, 1],
+        [0, 1],
         format_func=lambda x: "Yes" if x == 1 else "No"
     )
 
     if st.button("🚀 Predict Job", use_container_width=True):
         if not description.strip() and not requirements.strip():
-            st.warning("Please enter a job description or job requirements.")
+            st.warning(
+                "Please enter a job description or job requirements."
+            )
         else:
             combined_text = f"{description} {requirements}"
             character_count = len(combined_text)
             ratio = calculate_ratio(location)
 
             text_vector = count_vectorizer.transform([combined_text])
-            numerical_input = np.array([[telecommuting, ratio, character_count]])
+
+            numerical_input = np.array(
+                [[telecommuting, ratio, character_count]]
+            )
 
             pred_nb = nb_classifier.predict(text_vector)
             pred_log = clf_log.predict(text_vector)
             pred_num = clf_num.predict(numerical_input)
 
             final_pred = (
-                0 if pred_log[0] == 0 and pred_num[0] == 0 else 1
+                0
+                if pred_log[0] == 0 and pred_num[0] == 0
+                else 1
             )
 
             st.markdown("---")
             st.subheader("Prediction Result")
-
             if final_pred == 0:
                 st.success("✅ This is likely a **genuine job posting**.")
             else:

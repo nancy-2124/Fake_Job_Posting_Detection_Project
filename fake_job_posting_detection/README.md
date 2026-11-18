@@ -2,6 +2,9 @@
 
 A machine-learning-based Streamlit application for detecting potentially fraudulent job postings.
 
+Live Demo: https://fakejobpostingdetectionproject-tobyrjmebw2dvle72vzcxk.streamlit.app/
+Github Repository: https://github.com/nancy-2124/Fake_Job_Posting_Detection_Project/edit/main/fake_job_posting_detection/
+
 ## Features
 - Fake job posting prediction
 - Naive Bayes, Logistic Regression and numerical models
